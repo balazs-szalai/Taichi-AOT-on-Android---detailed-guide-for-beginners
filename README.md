@@ -30,7 +30,7 @@ You might also need to install skbuild:
 
     pip install scikit-build
 
-Then aquire an Android NDK for arm compilation. You can either download it form the internet or use the NDK coming with Buildozer (therefore it might be a good idea to set up buildozer now). Create a variable for the NDK root folder for example:
+Then aquire an Android NDK for arm compilation. You can either download it form the internet or use the NDK coming with Buildozer (therefore it is recommended to set up Buildozer now and try to build it). Create a variable for the NDK root folder for example:
 
     export ANDROID_NDK_ROOT=$HOME/.buildozer/android/platform/android-ndk-r25b
 You should use your own file path for the NDK root folder.
@@ -67,6 +67,7 @@ That is, we first create a new clean python environment for buildozer:
     pip install --upgrade pip wheel setuptools
 
     pip install buildozer cython
+    pip3 install --user --upgrade Cython==0.29.33 virtualenv
 
 You should now clone this repository:
 
