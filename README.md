@@ -24,7 +24,7 @@ We can first install every necessary packages using apt and pip:
     pip install buildozer scikit-build
     pip3 install --upgrade Cython==0.29.33 virtualenv
 
-This installs all the essential packages, creates a clean virtual environment for buildozer, activates it and pip install all the neseccary python packages. These steps will be shown again later but here they are gathered in one place for completeness.
+This installs all the essential packages, creates a clean virtual environment for buildozer, activates it and pip install all the neseccary python packages. These steps will be shown again later but here they are gathered in one place for completeness. For building libtaichi_c_api.so from source you need cmake 3.17 or newer.
 
 ## Cross compile the Taichi C API shared library for arm64
 Although not well documented in the Taichi docs, the raw Taichi repositor from https://github.com/taichi-dev/taichi allows for straightforward compilation of the C API using CMake. To make it work on Android we need to compile the Taichi C API with Vulkan but without LLVM (you could compile it with LLVM, but I could not make it work due to some error in the CMake which I don't understand, but it's also not necessary).  These stepps need o be done in Linux, I did it in WSL. Which we will set up first with a few useful (or essential) packages:
