@@ -66,7 +66,7 @@ That is, we first create a new clean python environment for buildozer:
     source buildozer-env/bin/activate
     pip install --upgrade pip wheel setuptools
 
-    pip install buildozer
+    pip install buildozer cython
 
 You should now clone this repository:
 
