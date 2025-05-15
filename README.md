@@ -101,7 +101,9 @@ Additionally, you might also want to create an assets folder and add the saved_a
 Now everything should be set up for building the app:
 
     buildozer -v android debug
-and after the lengthy build process a bin folder should appear with the compiled android .apk file. Our work is complete, we can install this apk to and Android device. It is necessary to point out that due to some Vulkan compatibility issues the app will only run on Android 14 or higher, therefore I could not make it work on my own phone with Android 12, but it did work in an Android 14 emulated device in Android Studio.
+and after the lengthy build process a bin folder should appear with the compiled android .apk file. Our work is complete, we can install this apk to and Android device, the file I built with this method can be downloaded from https://github.com/balazs-szalai/Taichi-AOT-on-Android---detailed-guide-for-beginners/releases/download/v1.0/myapp-0.1-arm64-v8a-debug.apk. 
+
+It is necessary to point out that due to some Vulkan compatibility issues the app will only run on Android 14 or higher, therefore I could not make it work on my own phone with Android 12, but it did work in an Android 14 emulated device in Android Studio.
     
 ## Why this project?
 
