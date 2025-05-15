@@ -1,0 +1,34 @@
+<MyWidget>:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 20
+    
+    TextInput:
+        id: textinput
+        text: root.search
+        size_hint_y: 0.2
+        readonly: False
+        font_size: 20
+        on_text_validate: root.on_enter()
+        multiline: False
+    
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        bar_width: 10
+
+        TextInput:
+            text: root.message
+            size_hint_y: None
+            readonly: True
+            height: self.minimum_height
+            text_size: self.width, None
+            font_size: 20
+            multiline: True
+            cursor_blink: False
+
+    Button:
+        size_hint_y: 0.1
+        text: "Click Me"
+        font_size: 24
+        on_press: root.on_button_press()
