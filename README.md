@@ -4,6 +4,7 @@ The Taichi's python runtime and JIT is not really Android friendly. But the Taic
 2. Cross compile the Taichi C API shared library for arm64 architecture.
 3. Writing a simple Kivy app which loads and uses the  AOT compiled Taichi kernel.
 4. Build this app for Android using Buildozer.
+First you should set up the Linux environment then set up Buildozer and try to build the app, this will download all the necessary android build tools, then you can try crosscompiling the Taichi C API for Android if necessary.
 
 ## Compile a Taichi kernel with its AOT module and load it from Python
 For this we will use the Python wrapper for the Taichi C API from https://github.com/smoothie-ws/TaichiAOT-Python-API and make same small but important changes to this package to make it work. 
