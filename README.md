@@ -103,3 +103,8 @@ Now everything should be set up for building the app:
     buildozer -v android debug
 and after the lengthy build process a bin folder should appear with the compiled android .apk file. Our work is complete, we can install this apk to and Android device. It is necessary to point out that due to some Vulkan compatibility issues the app will only run on Android 14 or higher, therefore I could not make it work on my own phone with Android 12, but it did work in an Android 14 emulated device in Android Studio.
     
+## Why this project?
+
+This guide was created after overcoming many undocumented edge cases with Taichi's AOT modul on Android. It's intended as a reproducible starting point for researchers, students, or developers interested in GPU-accelerated numerical computing on mobile devices.
+
+Feel free to fork, contribute, or open issues!
