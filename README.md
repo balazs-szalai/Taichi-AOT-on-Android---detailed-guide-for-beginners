@@ -16,7 +16,7 @@ Although not well documented in the Taichi docs, the raw Taichi repositor from h
     sudo apt update
     sudo apt install python3-venv python3-pip openjdk-17-jdk \
       git zip unzip build-essential libssl-dev zlib1g-dev \
-      libffi-dev libncurses5 libstdc++6 curl
+      libffi-dev libncurses5 libstdc++6 curl autoconf automake libtool
 
 
 Let's assume you have git accessible from Bash (after the setup you should have). Now clone the Taichi repository, open it, initialize submodules and create a folder for the android build:
