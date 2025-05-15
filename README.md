@@ -11,6 +11,21 @@ For this we will use the Python wrapper for the Taichi C API from https://github
 The changes made are outlined in [taichiAOT/CHANGES.md](taichiAOT/CHANGES.md). In the file [compile_kernel/taichi_aot_comp.py](compile_kernel/taichi_aot_comp.py) we compile a simple matrix multiplication kernel just for testing purposes. This has to be compiled for Vulkan since Taichi AOT only really support Vulkan. The compiled module is saved in the [compile_kernel](compile_kernel)/saved_aot.tcm file. By running [compile_kernel/test.py](compile_kernel/test.py) we can check if everything is running fine. 
 The file [compile_kernel/tiaotndarray.py](compile_kernel/tiaotndarray.py) we defined an easy-to-use ndarray wrapper for the Taichi ndarray. This is useful since the Taichi C API only allows for memory allocation and mapping the allocated device memory to host accessible space, but this can be wrapped into a Numpy array, and this small class also handles the creation of TiArgument for the ti_kernel_launch function.
 
+## Set up a Linux environment
+We can first install every necessary packages using apt and pip:
+
+    sudo apt update
+    sudo apt install python3-venv python3-pip openjdk-17-jdk \
+      git zip unzip build-essential libssl-dev zlib1g-dev \
+      libffi-dev libncurses5 libstdc++6 curl autoconf automake libtool cmake
+    python3 -m venv buildozer-env
+    source buildozer-env/bin/activate
+    pip install --upgrade pip wheel setuptools
+    pip install buildozer scikit-build
+    pip3 install --upgrade Cython==0.29.33 virtualenv
+
+This installs all the essential packages, creates a clean virtual environment for buildozer, activates it and pip install all the neseccary python packages. These steps will be shown again later but here they are gathered in one place for completeness.
+
 ## Cross compile the Taichi C API shared library for arm64
 Although not well documented in the Taichi docs, the raw Taichi repositor from https://github.com/taichi-dev/taichi allows for straightforward compilation of the C API using CMake. To make it work on Android we need to compile the Taichi C API with Vulkan but without LLVM (you could compile it with LLVM, but I could not make it work due to some error in the CMake which I don't understand, but it's also not necessary).  These stepps need o be done in Linux, I did it in WSL. Which we will set up first with a few useful (or essential) packages:
 
@@ -18,7 +33,6 @@ Although not well documented in the Taichi docs, the raw Taichi repositor from h
     sudo apt install python3-venv python3-pip openjdk-17-jdk \
       git zip unzip build-essential libssl-dev zlib1g-dev \
       libffi-dev libncurses5 libstdc++6 curl autoconf automake libtool
-
 
 Let's assume you have git accessible from Bash (after the setup you should have). Now clone the Taichi repository, open it, initialize submodules and create a folder for the android build:
     
