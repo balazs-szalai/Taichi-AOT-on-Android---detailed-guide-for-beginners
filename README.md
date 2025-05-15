@@ -7,7 +7,7 @@ The Taichi's python runtime and JIT is not really Android friendly. But the Taic
 
 ## Compile a Taichi kernel with its AOT module and load it from Python
 For this we will use the Python wrapper for the Taichi C API from https://github.com/smoothie-ws/TaichiAOT-Python-API and make same small but important changes to this package to make it work. 
-The changes made are outlined in taichiAOT/CHANGES.md. In the file compile_kernel/taichi_aot_comp.py we compile a simple matrix multiplication kernel just for testing purposes. This has to be compiled for Vulkan
+The changes made are outlined in [taichiAOT/CHANGES.md](taichiAOT/CHANGES.md). In the file compile_kernel/taichi_aot_comp.py we compile a simple matrix multiplication kernel just for testing purposes. This has to be compiled for Vulkan
 since Taichi AOT only really support Vulkan. The compiled module is saved in the compile_kernel/saved_aot.tcm file. By running compile_kernel/test.py we can check if everything is running fine. 
 The file compile_kernel/tiaotndarray.py we defined an easy-to-use ndarray wrapper for the Taichi ndarray. This is useful since the Taichi C API only allows for memory allocation and mapping the allocated device memory 
 to host accessible space, but this can be wrapped into a Numpy array, and this small class also handles the creation of TiArgument for the ti_kernel_launch function.
