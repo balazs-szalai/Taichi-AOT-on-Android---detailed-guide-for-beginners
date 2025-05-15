@@ -93,7 +93,7 @@ Optionally you might want to set the NDK path to what you used at building libta
     printf '<uses-feature \n    android:name="android.hardware.vulkan.compute" \n    android:required="true" />\n' > vulkan_feature.xml
 and specify this in buildozer.spec
 
-    android.extra_manifest_xml = custom.xml
+    android.extra_manifest_xml = vulkan_feature.xml
 Additionally, you might also want to create an assets folder and add the saved_aot.tcm and libtaichi_c_api.so to it and set it up in the buildozer.spec as
 
     android.add_assets = assets
