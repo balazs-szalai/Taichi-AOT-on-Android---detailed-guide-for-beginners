@@ -24,7 +24,7 @@ def numpy_shape(shape, element_shape = ()):
 
 
 class ndarray:
-    def __init__(self, runtime, dtype, shape, element_shape = (), host_accessible = True):
+    def __init__(self, runtime, dtype, shape, element_shape = ()):
         assert dtype in (np.float32, np.int32)
         if dtype == np.float32:
             ti_type_int = tiaot.TiDataType.TI_DATA_TYPE_F32
@@ -41,19 +41,15 @@ class ndarray:
         self.element_shape = element_shape
         self.runtime = runtime
         self.np_shape = np_shape
+        self.size = size
         
         allocate_info = tiaot.TiMemoryAllocateInfo(size = size, 
-                                                   host_write = host_accessible, 
-                                                   host_read = host_accessible, 
-                                export_sharing = True, 
+                                                   host_write = True, 
+                                                   host_read = True, 
+                                export_sharing = False, 
                                 usage = tiaot.TiMemoryUsageFlags.TI_MEMORY_USAGE_STORAGE_BIT)
         
         self.memory = tiaot.ti_allocate_memory(runtime, allocate_info)
-        
-        ptr = tiaot.ti_map_memory(runtime, self.memory)
-        
-        ctypes_type = np.ctypeslib.as_ctypes_type(dtype)
-        typed_ptr = ctypes.cast(ptr, ctypes.POINTER(ctypes_type))
         
         tidims = (ctypes.c_uint32 * 16)()
         tidims[0] = shape[0]
@@ -69,7 +65,6 @@ class ndarray:
         tielemshape = tiaot.TiNdShape(dim_count = len(element_shape) if element_shape else 1,
                                   dims = tidims)
         
-        self.numpy = np.ctypeslib.as_array(typed_ptr, shape=np_shape)
         
         self.tiarray = tiaot.TiNdArray(memory = self.memory,
                                        shape = tishape,
@@ -82,15 +77,31 @@ class ndarray:
         
     
     def __del__(self):
-        del self.numpy
-        tiaot.ti_unmap_memory(self.runtime, self.memory)
         tiaot.ti_free_memory(self.runtime, self.memory)
+        del self
     
     @classmethod
     def from_numpy(cls, runtime, np_array):
         ret = ndarray(runtime, np_array.dtype, np_array.shape)
         ret.numpy[...] = np_array[...]
         return ret
+    
+    def to_numpy(self):
+        ptr = tiaot.ti_map_memory(self.runtime, self.memory)
+        
+        ctypes_type = np.ctypeslib.as_ctypes_type(self.dtype)
+        typed_ptr = ctypes.cast(ptr, ctypes.POINTER(ctypes_type))
+        
+        numpy_array_dev = np.ctypeslib.as_array(typed_ptr, shape=self.np_shape)
+        
+        ret = np.empty_like(numpy_array_dev)
+        ret[...] = numpy_array_dev[...]
+        
+        del numpy_array_dev
+        tiaot.ti_unmap_memory(self.runtime, self.memory)
+        
+        return ret
+        
     
     def remap(self):
         del self.numpy

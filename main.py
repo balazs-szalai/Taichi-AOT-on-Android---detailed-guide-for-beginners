@@ -62,23 +62,39 @@ try:
     
     n = 5
     def call():
-        a = ndarray.from_numpy(runtime, np.random.random((n, n)).astype(np.float32))
-        b = ndarray.from_numpy(runtime, np.random.random((n, n)).astype(np.float32))
+        kernel_matmul = tiaot.ti_get_aot_module_kernel(module, 'matmul')
+        fill = tiaot.ti_get_aot_module_kernel(module, 'fill')
+
+        n = 200
+        a = ndarray(runtime, np.float32().dtype, (n, n))
+        b = ndarray(runtime, np.float32().dtype, (n, n))
         c = ndarray(runtime, np.float32().dtype, (n, n))
-        
+
         argument_array = tiaot.TiArgument * 3
         args = argument_array()
 
         args[0] = a.kernel_arg
         args[1] = b.kernel_arg
         args[2] = c.kernel_arg
-        
+
+        tiaot.ti_launch_kernel(runtime, fill, 2, 
+                               (tiaot.TiArgument * 2)(a.kernel_arg, 
+                                                      tiaot.TiArgument(
+                                                          tiaot.TiArgumentType.TI_ARGUMENT_TYPE_F32, 
+                                                          tiaot.TiArgumentValue(f32 = 1.5))))
+        tiaot.ti_launch_kernel(runtime, fill, 2, 
+                               (tiaot.TiArgument * 2)(b.kernel_arg, 
+                                                      tiaot.TiArgument(
+                                                          tiaot.TiArgumentType.TI_ARGUMENT_TYPE_F32, 
+                                                          tiaot.TiArgumentValue(f32 = 2.5))))
+
+
         tiaot.ti_launch_kernel(runtime, kernel_matmul, len(args), args)
         tiaot.ti_wait(runtime)
         
-        ret = c.numpy[0,0]
+        ret = c.to_numpy()[0,0]
         
-        del a, b, c
+        del a,b,c
         
         return ret
     
