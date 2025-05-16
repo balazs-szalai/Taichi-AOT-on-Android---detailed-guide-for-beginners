@@ -120,7 +120,7 @@ Now everything should be set up for building the app:
     buildozer -v android debug
 and after the lengthy build process a bin folder should appear with the compiled android .apk file. Our work is complete, we can install this apk to and Android device, the file I built with this method can be downloaded from https://github.com/balazs-szalai/Taichi-AOT-on-Android---detailed-guide-for-beginners/releases/download/v1.0/myapp-0.1-arm64-v8a-debug.apk. 
 
-## Thought for the end
+## Thoughts for the end
 We solved a lot of different issues: we made Taichi AOT work in pure Python, compiled the Taichi C API to Android and successfully built an app using these components for Android.
 
 However, it is important to point out that I could not make the app not crash on a real Android device (I tried my own phone with Android 12 and my brother's with Android 15). But the code itself should work since and emulated Android 14 device from Android Studio did run the app without issues.
