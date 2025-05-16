@@ -110,19 +110,18 @@ Optionally you might want to set the NDK path to what you used at building libta
 and specify this in buildozer.spec
 
     android.extra_manifest_xml = vulkan_feature.xml
-Additionally, you might also want to create an assets folder and add the saved_aot.tcm and libtaichi_c_api.so to it and set it up in the buildozer.spec as
+Additionally, you should also create an assets folder and add the saved_aot.tcm to it and create a libs/android-v8 folder and add libtaichi_c_api.so to it then set it up in the buildozer.spec as
 
     android.add_assets = assets
+    android.add_libs_arm64_v8a = libs/android-v8/*.so
 
 Now everything should be set up for building the app:
 
     buildozer -v android debug
 and after the lengthy build process a bin folder should appear with the compiled android .apk file. Our work is complete, we can install this apk to and Android device, the file I built with this method can be downloaded from https://github.com/balazs-szalai/Taichi-AOT-on-Android---detailed-guide-for-beginners/releases/download/v1.0/myapp-0.1-arm64-v8a-debug.apk. 
 
-It is necessary to point out that due to some Vulkan compatibility issues the app will only run on Android 14 or higher, therefore I could not make it work on my own phone with Android 12, but it did work in an Android 14 emulated device in Android Studio.
-    
-## Why this project?
+## Thought for the end
+We solved a lot of different issues: we made Taichi AOT work in pure Python, compiled the Taichi C API to Android and successfully built an app using these components for Android.
 
-This guide was created after overcoming many undocumented edge cases with Taichi's AOT modul on Android. It's intended as a reproducible starting point for researchers, students, or developers interested in GPU-accelerated numerical computing on mobile devices.
+However, it is important to point out that I could not make the app not crash on a real Android device (I tried my own phone with Android 12 and my brother's with Android 15). But the code itself should work since and emulated Android 14 device from Android Studio did run the app without issues.
 
-Feel free to fork, contribute, or open issues!
